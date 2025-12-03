@@ -13,7 +13,7 @@ import MyPostedJob from "../pages/Home/Job/MyPostedJob";
 import ViewApplication from "../pages/Home/Job/ViewApplication";
 import ImgCv from "../pages/Input/ImgCv";
 import PdfCv from "../pages/Input/PdfCv";
-import Contact from "../pages/Contact";
+import AboutUs from "../pages/AboutUs";
 
 export const router = createBrowserRouter([
   {
@@ -25,8 +25,8 @@ export const router = createBrowserRouter([
             element: <Home></Home>
         },
         {
-            path: 'contact',
-            element: <Contact></Contact>
+            path: 'about',
+            element: <AboutUs></AboutUs>
         },
         {
             path: 'register',

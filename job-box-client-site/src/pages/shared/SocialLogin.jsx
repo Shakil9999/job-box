@@ -28,7 +28,7 @@ const SocialLogin = () => {
   };
   return (
     <div>
-      <button onClick={handleSocialLogin} className="btn btn-outline btn-info">
+      <button onClick={handleSocialLogin} className="btn btn-outline btn-info w-full">
         Log in with Google
       </button>
     </div>

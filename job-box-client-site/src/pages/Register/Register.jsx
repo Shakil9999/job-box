@@ -7,125 +7,137 @@ import SocialLogin from "../shared/SocialLogin";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-const image_hosting_key = import.meta.env.VITE_image_hosting
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-
+const image_hosting_key = import.meta.env.VITE_image_hosting;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
+
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
 
-
-  const handleRegister = async(e) => {
-
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
+
     const fullName = form.fullName.value;
     const email = form.email.value;
     const password = form.password.value;
-   
-     // 1. Get the uploaded file
-    const image = form.image.files[0]
 
-    // 2. Upload image to ImgBB and get back img url
-    const userImage = new FormData()
-    userImage.append("image", image)
+    // Image Upload
+    const image = form.image.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
 
-    // 3.get image url
-    const res = await axios.post(image_hosting_api, userImage)
-    const imageURL = res.data.data.display_url
-    console.log(imageURL)
+    // Upload to imgbb
+    const imgResponse = await axios.post(image_hosting_api, formData);
+    const imageURL = imgResponse.data.data.display_url;
 
-    const formData = { fullName, email, password, imageURL};
-     console.log(formData);
+    const newUser = { fullName, email, password, imageURL };
 
-     axios.post('http://localhost:5000/users', formData)
-     .then(res=>{
-      console.log(res.data)
-     })
+    // save to database
+    axios.post("http://localhost:5000/users", newUser);
 
-
+    // firebase create user
     createUser(email, password)
       .then((result) => {
-        console.log("register login", result.user);
-
         if (result.user) {
           Swal.fire({
-            title: "User Create Successful",
+            title: "Account Created Successfully!",
             icon: "success",
-            draggable: true,
+            timer: 1500,
+            showConfirmButton: false,
           });
         }
         navigate(location?.state ? location.state : "/");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+      .catch((error) => console.log(error));
   };
+
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left flex-1 mx-8">
-          <Lottie animationData={registerAnimation}></Lottie>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4">
+      <div className="flex flex-col lg:flex-row-reverse items-center gap-12 max-w-6xl w-full">
+
+        {/* Animation */}
+        <div className="flex-1 flex justify-center">
+          <div className="w-80 h-80 lg:w-[420px] lg:h-[420px]">
+            <Lottie animationData={registerAnimation} />
+          </div>
         </div>
-        <div className="card bg-base-100 w-full  shrink-0 shadow-2xl flex-1">
-          <div className="card-body">
-            <h1 className="text-4xl text-center font-semibold">Register Now</h1>
-            <form onSubmit={handleRegister} className="fieldset">
-              <label className="label">Enter Full Name</label>
+
+        {/* Beautiful Register Card */}
+        <div className="flex-1 backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-10 text-white">
+
+          <h1 className="text-4xl font-bold text-center mb-6 tracking-wide">
+            Create Account
+          </h1>
+
+          <form onSubmit={handleRegister} className="space-y-4">
+
+            <div>
+              <label className="text-gray-300">Full Name</label>
               <input
                 type="text"
-                className="input w-full"
-                placeholder="Enter Full Name"
                 name="fullName"
+                required
+                placeholder="Enter your full name"
+                className="input input-bordered w-full bg-white/10 text-white placeholder-gray-300 border-gray-500 focus:border-purple-400"
               />
+            </div>
 
-              <label className="label">Email</label>
+            <div>
+              <label className="text-gray-300">Email</label>
               <input
                 type="email"
-                className="input w-full"
-                placeholder="Email"
                 name="email"
+                required
+                placeholder="Enter your email"
+                className="input input-bordered w-full bg-white/10 text-white placeholder-gray-300 border-gray-500 focus:border-purple-400"
               />
+            </div>
 
-              <label className="label">Password</label>
+            <div>
+              <label className="text-gray-300">Password</label>
               <input
                 type="password"
-                className="input w-full"
-                placeholder="Password"
                 name="password"
+                required
+                placeholder="Enter password"
+                className="input input-bordered w-full bg-white/10 text-white placeholder-gray-300 border-gray-500 focus:border-purple-400"
               />
+            </div>
 
-              {/* photo input */}
-              <label className="label">Choose Image</label>
-              <input 
-              type="file" 
-              accept="image/png, image/jpeg, image/jpg, image/webp"
-              className="file-input file-input-primary" 
-              name="image" />
+            {/* Photo Input */}
+            <div>
+              <label className="text-gray-300">Upload Profile Image</label>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                required
+                className="file-input w-full bg-white/10 text-gray-200 file:bg-purple-600 file:border-none file:text-white hover:file:bg-purple-700"
+              />
+            </div>
 
+            <button className="btn w-full bg-purple-600 hover:bg-purple-700 text-white text-lg rounded-xl shadow-lg border-none mt-3">
+              Register
+            </button>
+          </form>
 
-              <button className="btn btn-neutral mt-4">Register</button>
-            </form>
-            <p>
-              Already Have An Account! please{" "}
-              <Link
-                className="text-blue-700 font-semibold"
-                state={location.state}
-                to="/login"
-              >
-                {" "}
-                Login
-              </Link>
-            </p>
-            <div className="divider m-0">OR</div>
-            <SocialLogin></SocialLogin>
-          </div>
+          <p className="text-center text-gray-300 mt-4">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              state={location.state}
+              className="text-purple-400 hover:text-purple-500 font-semibold"
+            >
+              Login
+            </Link>
+          </p>
+
+          <div className="divider text-gray-300">OR</div>
+
+          <SocialLogin />
         </div>
       </div>
     </div>

@@ -5,11 +5,11 @@ import useAuthContext from "../../../Hooks/useAuthContext";
 
 const image_hosting_key = import.meta.env.VITE_image_hosting;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-const JobApply = () => {
-  const id = useParams();
 
+const JobApply = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleJobApply = async (e) => {
     e.preventDefault();
@@ -43,136 +43,110 @@ const JobApply = () => {
       coverLetter,
     };
 
-    // console.log("✅ Application:", application);
-
-    axios
-      .post("http://localhost:5000/job-application", application)
-      .then((res) => {
-        // console.log(res.data);
-        form.reset();
-        if (res.data.insertedId) {
-          Swal.fire({
-            title: "Apply SuccessFul",
-            icon: "success",
-            draggable: true,
-          });
-        }
-        navigate("/myApplication");
-      });
+    axios.post("http://localhost:5000/job-application", application).then((res) => {
+      form.reset();
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Application Submitted Successfully!",
+          icon: "success",
+          draggable: true,
+        });
+      }
+      navigate("/myApplication");
+    });
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-8 rounded shadow mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Job Application Form
-      </h2>
-      <form onSubmit={handleJobApply} className="space-y-4">
-        {/* Full Name */}
-        <div>
-          <label className="block font-medium mb-1">Full Name</label>
-          <input
-            required
-            type="text"
-            name="fullName"
-            className="input input-bordered w-full"
-            placeholder="Enter your full name"
-          />
-        </div>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-6xl mx-auto bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Job Application Form
+        </h2>
 
-        <div className="flex gap-5 w-full">
-          {/* Email */}
-          <div className="flex-1">
-            <label className="block font-medium mb-1">Email Address</label>
+        <form onSubmit={handleJobApply} className="space-y-6">
+
+          {/* --- Personal Information --- */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-gray-700">Personal Information</h3>
             <input
-              required
-              type="email"
-              name="email"
-              defaultValue={user.email}
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
               className="input input-bordered w-full"
-              placeholder="Enter your email"
+              required
+            />
+
+            <div className="flex gap-4">
+              <input
+                type="email"
+                name="email"
+                defaultValue={user.email}
+                placeholder="Email Address"
+                className="input input-bordered flex-1"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                className="input input-bordered flex-1"
+                required
+              />
+            </div>
+          </div>
+
+          {/* --- Online Presence --- */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-gray-700">Online Presence</h3>
+            <input
+              type="url"
+              name="linkedin"
+              placeholder="LinkedIn Profile URL"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="url"
+              name="portfolio"
+              placeholder="Portfolio / Website URL"
+              className="input input-bordered w-full"
+              required
             />
           </div>
 
-          {/* Phone */}
-          <div className="flex-1">
-            <label className="block font-medium mb-1">Phone Number</label>
+          {/* --- Resume Upload --- */}
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold text-gray-700">Resume Upload</h3>
             <input
+              type="file"
+              name="resumeFile"
+              accept=".jpg,.jpeg,.png"
+              className="file-input file-input-bordered w-full"
               required
-              type="tel"
-              name="phone"
-              className="input input-bordered w-full"
-              placeholder="Enter your phone number"
             />
           </div>
-        </div>
 
-        {/* LinkedIn */}
-        <div>
-          <label className="block font-medium mb-1">LinkedIn Profile</label>
-          <input
-            required
-            type="url"
-            name="linkedin"
-            className="input input-bordered w-full"
-            placeholder="LinkedIn URL"
-          />
-        </div>
+          {/* --- Cover Letter --- */}
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold text-gray-700">Cover Letter</h3>
+            <textarea
+              name="coverLetter"
+              rows="5"
+              placeholder="Write your cover letter..."
+              className="textarea textarea-bordered w-full"
+              required
+            ></textarea>
+          </div>
 
-        {/* Portfolio */}
-        <div>
-          <label className="block font-medium mb-1">Portfolio/Website</label>
-          <input
-            required
-            type="url"
-            name="portfolio"
-            className="input input-bordered w-full"
-            placeholder="Portfolio URL"
-          />
-        </div>
-
-        {/* Resume Upload */}
-        {/* <div>
-          <label className="block font-medium mb-1">Upload Your Resume</label>
-          <input
-            type="url"
-            name="resume"
-            className="input input-bordered w-full"
-            placeholder="Resume URL"
-          />
-        </div> */}
-
-        {/* Resume IMAGE Upload  */}
-
-        <div>
-          <label className="block font-medium mb-1">
-            Upload Resume (IMAGE only)
-          </label>
-          <input
-            required
-            type="file"
-            name="resumeFile"
-            accept=".jpg,.jpeg,.png"
-            className="file-input file-input-bordered w-full"
-          />
-        </div>
-
-        {/* Cover Letter */}
-        <div>
-          <label className="block font-medium mb-1">Cover Letter</label>
-          <textarea
-            required
-            name="coverLetter"
-            className="textarea textarea-bordered w-full"
-            rows="4"
-            placeholder="Write your cover letter here..."
-          ></textarea>
-        </div>
-
-        {/* Submit Button (does nothing) */}
-        <button type="submit" className="btn btn-primary w-full">
-          Submit Application
-        </button>
-      </form>
+          {/* --- Submit Button --- */}
+          <button
+            type="submit"
+            className="btn btn-primary w-full py-3 text-lg hover:shadow-lg transition-all duration-200"
+          >
+            Submit Application
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -52,46 +52,34 @@ const AddJob = () => {
     });
   };
   return (
-    <div>
-      <form
-        onSubmit={handleAddJob}
-        className="max-w-3xl mx-auto p-6 bg-white shadow rounded-md space-y-4"
-      >
-        <h2 className="text-2xl font-bold text-center mb-4">
-          Job Information Form
-        </h2>
+  <div className="py-12 bg-gray-50 min-h-screen">
+    <form
+      onSubmit={handleAddJob}
+      className="max-w-6xl mx-auto p-10 bg-white rounded-2xl shadow-lg border border-gray-100"
+    >
+      <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
+        Post a New Job
+      </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Job Title */}
+      {/* --- Basic Job Information --- */}
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-3 text-gray-700">
+          Basic Information
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block font-medium mb-1">Job Title</label>
-            <input
-              type="text"
-              name="title"
-              className="w-full input input-bordered"
-              required
-            />
+            <label className="form-label">Job Title</label>
+            <input type="text" name="title" className="input input-bordered w-full" required />
           </div>
 
-          {/* Location */}
           <div>
-            <label className="block font-medium mb-1">Location</label>
-            <input
-              type="text"
-              name="location"
-              className="w-full input input-bordered"
-              required
-            />
+            <label className="form-label">Location</label>
+            <input type="text" name="location" className="input input-bordered w-full" required />
           </div>
 
-          {/* Job Type */}
           <div>
-            <label className="block font-medium mb-1">Job Type</label>
-            <select
-              name="jobType"
-              className="w-full select select-bordered"
-              required
-            >
+            <label className="form-label">Job Type</label>
+            <select name="jobType" className="select select-bordered w-full" required>
               <option value="">Select</option>
               <option value="Onsite">Onsite</option>
               <option value="Remote">Remote</option>
@@ -99,155 +87,115 @@ const AddJob = () => {
             </select>
           </div>
 
-          {/* Category */}
           <div>
-            <label className="block font-medium mb-1">Category</label>
-            <input
-              type="text"
-              name="category"
-              className="w-full input input-bordered"
-              required
-            />
+            <label className="form-label">Category</label>
+            <input type="text" name="category" className="input input-bordered w-full" required />
           </div>
 
-          {/* Application Deadline */}
           <div>
-            <label className="block font-medium mb-1">
-              Application Deadline
-            </label>
-            <input
-              type="date"
-              name="applicationDeadline"
-              className="w-full input input-bordered"
-              required
-            />
+            <label className="form-label">Application Deadline</label>
+            <input type="date" name="applicationDeadline" className="input input-bordered w-full" required />
           </div>
 
-          {/* Min Salary */}
-          <div className="flex gap-2">
-            <div className="w-1/2">
-              <label className="block font-medium mb-1">Min Salary</label>
-              <input
-                type="text"
-                name="min"
-                className="w-full input input-bordered"
-              />
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="form-label">Min Salary</label>
+              <input type="number" name="min" className="input input-bordered w-full" required />
             </div>
 
-            {/* Max Salary */}
-            <div className="w-1/2">
-              <label className="block font-medium mb-1">Max Salary</label>
-              <input
-                type="text"
-                name="max"
-                className="w-full input input-bordered"
-              />
+            <div className="flex-1">
+              <label className="form-label">Max Salary</label>
+              <input type="number" name="max" className="input input-bordered w-full" required />
             </div>
-          </div>
-
-          {/* Company Name*/}
-          <div className="md:col-span-2">
-            <label className="block font-medium mb-1">Company Name</label>
-            <input
-              type="text"
-              name="company"
-              className="w-full input input-bordered"
-              required
-            />
-          </div>
-
-          {/* Requirements */}
-          <div className=" w-full flex-1">
-            <label className="block font-semibold mt-4 mb-1">
-              Requirements
-            </label>
-            <textarea
-              name="requirements"
-              className="w-full textarea textarea-bordered"
-              rows="4"
-              required
-            />
-          </div>
-
-          {/* Responsibilities */}
-          <div className="flex-1">
-            <label className="block font-semibold mt-4 mb-1">
-              Responsibilities
-            </label>
-            <textarea
-              name="responsibilities"
-              className="w-full textarea textarea-bordered"
-              rows="4"
-              required
-            />
           </div>
         </div>
+      </div>
 
-        {/* Job Description */}
-        <div className="md:col-span-2">
-          <label className="block font-medium mb-1">Job Description</label>
+      {/* --- Company Information --- */}
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-3 text-gray-700">
+          Company Information
+        </h3>
+
+        <div>
+          <label className="form-label">Company Name</label>
+          <input type="text" name="company" className="input input-bordered w-full" required />
+        </div>
+
+        <div className="mt-4">
+          <label className="form-label">Upload Company Logo</label>
+          <input type="file" name="company_logo" accept="image/*" className="file-input file-input-bordered w-full" />
+        </div>
+      </div>
+
+      {/* --- Job Description Section --- */}
+      <div className="mb-8 grid md:grid-cols-2 gap-6">
+        <div>
+          <label className="form-label">Requirements</label>
           <textarea
-            name="description"
-            className="w-full textarea textarea-bordered"
-            rows="4"
+            name="requirements"
+            className="textarea textarea-bordered w-full"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <div>
+          <label className="form-label">Responsibilities</label>
+          <textarea
+            name="responsibilities"
+            className="textarea textarea-bordered w-full"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <label className="form-label">Job Description</label>
+        <textarea
+          name="description"
+          className="textarea textarea-bordered w-full"
+          rows="5"
+          required
+        ></textarea>
+      </div>
+
+      {/* --- HR Section --- */}
+      <div className="mb-8 grid md:grid-cols-2 gap-6">
+        <div>
+          <label className="form-label">Status</label>
+          <select name="status" className="select select-bordered w-full">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="form-label">HR Name</label>
+          <input type="text" name="hr_name" className="input input-bordered w-full" required />
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="form-label">HR Email</label>
+          <input
+            type="email"
+            name="hr_email"
+            defaultValue={user.email}
+            className="input input-bordered w-full"
             required
           />
         </div>
+      </div>
 
-        {/* Status */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium mb-1">Status</label>
-            <select name="status" className="w-full select select-bordered">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
+      {/* Submit Button */}
+      <div className="text-center">
+        <button className="btn btn-primary w-full text-lg py-2">Submit Job</button>
+      </div>
+    </form>
+  </div>
+);
 
-          {/* HR Name */}
-          <div>
-            <label className="block font-medium mb-1">HR Name</label>
-            <input
-              type="text"
-              name="hr_name"
-              className="w-full input input-bordered"
-              required
-            />
-          </div>
-
-          {/* HR Email */}
-          <div className="md:col-span-2">
-            <label className="block font-medium mb-1">HR Email</label>
-            <input
-              type="email"
-              defaultValue={user.email}
-              name="hr_email"
-              className="w-full input input-bordered"
-              required
-            />
-          </div>
-        </div>
-
-        {/* Company Logo URL */}
-        <div>
-          <label className="block font-medium mb-1">
-            Upload Company Logo (IMAGE only)
-          </label>
-          <input
-            type="file"
-            name="company_logo"
-            accept=".jpg,.jpeg,.png"
-            className="file-input file-input-bordered w-full"
-          />
-        </div>
-
-        {/* Submit */}
-        <button type="submit" className="btn btn-primary w-full mt-6">
-          Submit
-        </button>
-      </form>
-    </div>
-  );
 };
 
 export default AddJob;
