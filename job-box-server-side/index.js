@@ -8,10 +8,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
 
 //middlewares
-app.use(cors({
-  origin: ['http://localhost:5173', "https://job-box-client-five.vercel.app/"],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser())
 
