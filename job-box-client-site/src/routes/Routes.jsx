@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         {
           path: 'job/:id',
           element: <PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
-          loader: ({params})=> fetch(`http://localhost:5000/job/${params.id}`)
+          loader: ({params})=> fetch(`https://job-box-server-lilac.vercel.app/job/${params.id}`)
         },
         {
           path: 'apply/:id',
@@ -72,7 +72,7 @@ export const router = createBrowserRouter([
         {
           path: 'viewApplication/:job_id',
           element: <PrivateRoute><ViewApplication></ViewApplication></PrivateRoute>,
-          loader: ({params})=> fetch(`http://localhost:5000/job-application/jobs/${params.job_id}`)
+          loader: ({params})=> fetch(`https://job-box-server-lilac.vercel.app/job-application/jobs/${params.job_id}`)
         }
     ]
   },

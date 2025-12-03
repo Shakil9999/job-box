@@ -43,7 +43,7 @@ const JobApply = () => {
       coverLetter,
     };
 
-    axios.post("http://localhost:5000/job-application", application).then((res) => {
+    axios.post("https://job-box-server-lilac.vercel.app/job-application", application).then((res) => {
       form.reset();
       if (res.data.insertedId) {
         Swal.fire({

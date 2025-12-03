@@ -10,7 +10,7 @@ const ViewApplication = () => {
       status: e.target.value,
     };
     axios
-      .patch(`http://localhost:5000/job-application/${id}`, data)
+      .patch(`https://job-box-server-lilac.vercel.app/job-application/${id}`, data)
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount) {

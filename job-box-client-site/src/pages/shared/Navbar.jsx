@@ -12,7 +12,7 @@ const Navbar = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/users").then((res) => {
+    axios.get("https://job-box-server-lilac.vercel.app/users").then((res) => {
       setUsers(res.data);
     });
   }, []);

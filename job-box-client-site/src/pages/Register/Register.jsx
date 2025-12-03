@@ -36,7 +36,7 @@ const Register = () => {
     const newUser = { fullName, email, password, imageURL };
 
     // save to database
-    axios.post("http://localhost:5000/users", newUser);
+    axios.post("https://job-box-server-lilac.vercel.app/users", newUser);
 
     // firebase create user
     createUser(email, password)

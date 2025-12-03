@@ -7,7 +7,7 @@ const Jobs = () => {
     const jobsPerPage = 6; // Showing 6 jobs per page
 
     useEffect(() => {
-        fetch("http://localhost:5000/job")
+        fetch("https://job-box-server-lilac.vercel.app/job")
             .then((res) => res.json())
             .then((data) => {
                 setJobs(data);

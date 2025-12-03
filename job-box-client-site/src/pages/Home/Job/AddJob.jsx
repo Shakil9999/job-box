@@ -38,7 +38,7 @@ const AddJob = () => {
     // 3. set img url to the newJob form
     newJob.company_logo = imgURL;
 
-    axios.post("http://localhost:5000/jobs", newJob).then((res) => {
+    axios.post("https://job-box-server-lilac.vercel.app/jobs", newJob).then((res) => {
     //   console.log(res.data);
       form.reset()
       navigate('/myPostedJob')

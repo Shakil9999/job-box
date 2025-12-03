@@ -10,7 +10,7 @@ const MyPostedJob = () => {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/job?email=${user?.email}`).then((res) => {
+    axios.get(`https://job-box-server-lilac.vercel.app/job?email=${user?.email}`).then((res) => {
       setJobs(res.data);
     });
   }, [user.email]);

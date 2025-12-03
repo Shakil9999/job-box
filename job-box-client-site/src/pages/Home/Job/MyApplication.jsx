@@ -12,7 +12,7 @@ const MyApplication = () => {
   // const navigate = useNavigate()
   useEffect(() => {
     // axios
-    //   .get(`http://localhost:5000/job-application?email=${user.email}`, {withCredentials: true})
+    //   .get(`https://job-box-server-lilac.vercel.app/job-application?email=${user.email}`, {withCredentials: true})
     //   .then((res) => {
     //     // console.log(res.data)
     //     setApplication(res.data);

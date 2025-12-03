@@ -26,14 +26,14 @@ const AuthProvider = ({children}) => {
             if(currentUser?.email){
                 const user = { email: currentUser.email}
 
-                axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
+                axios.post('https://job-box-server-lilac.vercel.app/jwt', user, {withCredentials: true})
                 .then(res=>{
                     console.log("login",res.data)
                     setLoading(false)
                 })
             }
             else {
-                axios.post('http://localhost:5000/logout', {}, {withCredentials: true})
+                axios.post('https://job-box-server-lilac.vercel.app/logout', {}, {withCredentials: true})
                 .then(res=>{
                     console.log("logout", res.data)
                     setLoading(false)
